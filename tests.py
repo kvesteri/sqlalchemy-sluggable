@@ -119,3 +119,46 @@ class TestSluggableCustomSeparator(TestCase):
         self.session.commit()
 
         assert post2.slug == u'hello_world_2'
+
+
+class TestWithConcreteInheritance(TestCase):
+    slug_options = {
+        'populate_from': 'title',
+        'separator': '_'
+    }
+
+    def create_post_model(self, **slug_options):
+        class Post(self.Model, Sluggable):
+            __tablename__ = 'posts'
+            __sluggable__ = slug_options
+
+            id = Column(Integer, primary_key=True)
+            title = Column(Unicode(255), nullable=False)
+            type = Column(Unicode(20), nullable=False)
+
+            __mapper_args__ = {'polymorphic_on': type}
+
+            def __init__(self, title):
+                self.title = title
+
+        class Article(Post):
+            __mapper_args__ = {'polymorphic_identity': u'article'}
+
+        class BlogPost(Post):
+            __mapper_args__ = {'polymorphic_identity': u'blog-post'}
+
+        self.Article = Article
+        self.BlogPost = BlogPost
+
+        return Post
+
+    def test_avoids_slug_collisions_with_child_classes(self):
+        article = self.Article(u'some title')
+        self.session.add(article)
+        self.session.commit()
+
+        blog_post = self.BlogPost(u'some title')
+        self.session.add(blog_post)
+        self.session.commit()
+
+        assert blog_post.slug == u'some_title_2'

@@ -13,6 +13,22 @@ DEFAULT_SLUG_OPTIONS = {
 }
 
 
+def get_class_with_tablename(cls):
+    mapper_args = {}
+    if hasattr(cls, '__mapper_args__'):
+        mapper_args = cls.__mapper_args__
+
+    if 'inherits' not in mapper_args:
+        return cls
+    if cls.__tablename__ != mapper_args['inherits'].__tablename__:
+        return cls
+    for parent in cls.__bases__:
+        result = get_class_with_tablename(parent)
+        if result:
+            return result
+    return None
+
+
 class Sluggable(object):
     slug = Column(Unicode(255), unique=True, nullable=False)
 
@@ -47,7 +63,10 @@ class Sluggable(object):
         :param slug: the slug to check for existence.
         """
         try:
-            obj = session.query(self.__class__).filter_by(slug=slug).one()
+            self.__class__
+            obj = session.query(
+                get_class_with_tablename(self.__class__)
+            ).filter_by(slug=slug).one()
             return obj is not self
         except NoResultFound:
             return False
