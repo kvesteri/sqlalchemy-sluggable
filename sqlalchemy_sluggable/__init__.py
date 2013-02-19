@@ -14,6 +14,15 @@ DEFAULT_SLUG_OPTIONS = {
 
 
 def get_class_with_tablename(cls):
+    """
+    Returns the first parent found (or the class itself) for given class which
+    has __tablename__ attribute set.
+
+    This function is needed for slug uniqueness testing when using concrete
+    inheritance.
+
+    :param cls: class to inspect
+    """
     mapper_args = {}
     if hasattr(cls, '__mapper_args__'):
         mapper_args = cls.__mapper_args__
