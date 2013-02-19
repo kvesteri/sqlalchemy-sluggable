@@ -23,7 +23,7 @@ class PyTest(Command):
         raise SystemExit(errno)
 
 setup(
-    name='SQLAlchemy-Utils',
+    name='SQLAlchemy-Sluggable',
     version='0.1',
     url='https://github.com/kvesteri/sqlalchemy-utils',
     license='BSD',
