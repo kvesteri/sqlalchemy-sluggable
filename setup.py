@@ -33,7 +33,7 @@ setup(
         'Configurable slugs to SQLAlchemy models.'
     ),
     long_description=__doc__,
-    packages=['sqlalchemy_utils'],
+    packages=['sqlalchemy_sluggable'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
