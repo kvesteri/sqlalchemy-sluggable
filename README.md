@@ -1,0 +1,4 @@
+sqlalchemy-sluggable
+====================
+
+SQLAlchemy-Sluggable
