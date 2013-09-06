@@ -38,8 +38,8 @@ setup(
     include_package_data=True,
     platforms='any',
     install_requires=[
-        'inflection==0.1.2',
-        'SQLAlchemy==0.7.8',
+        'inflection>=0.1.2',
+        'SQLAlchemy>=0.7.8',
     ],
     cmdclass={'test': PyTest},
     classifiers=[
