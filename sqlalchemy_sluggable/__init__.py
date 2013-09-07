@@ -6,9 +6,12 @@ from sqlalchemy.orm import Session
 from sqlalchemy.orm.exc import NoResultFound
 
 
+__version__ = '0.1.2'
+
+
 DEFAULT_SLUG_OPTIONS = {
     'always_update': False,
-    'populates_from': None,
+    'populate_from': None,
     'separator': '-'
 }
 
@@ -110,8 +113,10 @@ class Sluggable(object):
 
 @event.listens_for(Session, 'before_flush')
 def populate_slug(session, flush_context, instances):
-    sluggables = [obj for obj in chain(session.new, session.dirty)
-                  if isinstance(obj, Sluggable)]
+    sluggables = [
+        obj for obj in chain(session.new, session.dirty)
+        if isinstance(obj, Sluggable)
+    ]
     for sluggable in sluggables:
         always_update = sluggable._get_slug_option('always_update')
         if always_update or sluggable in session.new:

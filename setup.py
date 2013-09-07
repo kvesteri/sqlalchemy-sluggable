@@ -24,7 +24,7 @@ class PyTest(Command):
 
 setup(
     name='SQLAlchemy-Sluggable',
-    version='0.1.1',
+    version='0.1.2',
     url='https://github.com/kvesteri/sqlalchemy-sluggable',
     license='BSD',
     author='Janne Vanhala, Konsta Vesterinen',

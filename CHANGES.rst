@@ -4,7 +4,13 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Sluggable release.
 
 
-0.1.0 (2013-02-19)
+0.1.2 (2013-02-19)
+^^^^^^^^^^^^^^^^^^
+
+- Fixed default parameter name
+
+
+0.1.1 (2013-02-19)
 ^^^^^^^^^^^^^^^^^^
 
 - Added support for concrete inheritance
